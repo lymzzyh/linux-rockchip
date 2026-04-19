@@ -26,6 +26,11 @@
 / {
 	model = "Rockchip RK3588S BOX LP4 V10 Board";
 	compatible = "rockchip,rk3588s-box-v10", "rockchip,rk3588";
+
+	chosen {
+		/delete-property/ bootargs;
+		stdout-path = "serial2:1500000n8";
+	};
 };
 
 /*
@@ -62,5 +67,9 @@
 };
 
 &{/panel-edp} {
+	status = "disabled";
+};
+
+&fiq_debugger {
 	status = "disabled";
 };
