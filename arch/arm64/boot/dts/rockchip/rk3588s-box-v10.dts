@@ -1,0 +1,66 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright (c) 2026
+ *
+ * Vendor-kernel DTS for the board identified from an Android boot.img DTB.
+ * Provenance from the extracted DTB:
+ *   - model: "Rockchip RK3588S BOX LP4 V10 Board"
+ *   - compatible: "rockchip,rk3588s-box-v10", "rockchip,rk3588"
+ *
+ * The extracted DTB string set matches the RK3588S EVB1 LP4X vendor family
+ * more closely than the other in-tree RK3588S vendor boards:
+ *   - RK806 single PMIC
+ *   - AP6275P Wi-Fi/BT
+ *   - FUSB302 Type-C
+ *   - HDMI/DP audio nodes
+ *
+ * Keep the inheritance narrow and disable EVB1 tablet-style peripherals that
+ * are not justified by the extracted Android DTB.
+ */
+
+/dts-v1/;
+
+#include "rk3588s-evb1-lp4x.dtsi"
+#include "rk3588-linux.dtsi"
+
+/ {
+	model = "Rockchip RK3588S BOX LP4 V10 Board";
+	compatible = "rockchip,rk3588s-box-v10", "rockchip,rk3588";
+};
+
+/*
+ * The vendor DTB exposes HDMI/DP, Type-C, AP6275P and RK806-family strings,
+ * but gives no clear evidence for the EVB1's internal panel/touch/sensor
+ * stack. Disable those blocks instead of inheriting them by default.
+ */
+&backlight {
+	status = "disabled";
+};
+
+&edp0 {
+	status = "disabled";
+};
+
+&edp0_in_vp2 {
+	status = "disabled";
+};
+
+&hall_sensor {
+	status = "disabled";
+};
+
+&i2c4 {
+	status = "disabled";
+};
+
+&i2c5 {
+	status = "disabled";
+};
+
+&route_edp0 {
+	status = "disabled";
+};
+
+&{/panel-edp} {
+	status = "disabled";
+};
