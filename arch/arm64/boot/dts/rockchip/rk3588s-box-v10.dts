@@ -135,6 +135,74 @@
 	mem-supply = <&vdd_cpu_big1_box>;
 };
 
+&sdio {
+	status = "disabled";
+};
+
+&sdio_pwrseq {
+	status = "disabled";
+};
+
+&usbc0 {
+	status = "disabled";
+};
+
+&rkcif {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds_sditf {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds1 {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds1_sditf {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds2 {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds2_sditf {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds3 {
+	status = "disabled";
+};
+
+&rkcif_mipi_lvds3_sditf {
+	status = "disabled";
+};
+
 &fiq_debugger {
+	status = "disabled";
+};
+
+&wireless_bluetooth {
+	status = "disabled";
+};
+
+&wireless_wlan {
+	status = "disabled";
+};
+
+&es7202_sound_micarray {
+	status = "disabled";
+};
+
+&es8388_sound {
+	status = "disabled";
+};
+
+&vendor_storage {
 	status = "disabled";
 };
