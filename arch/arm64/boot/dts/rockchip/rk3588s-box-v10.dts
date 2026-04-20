@@ -71,6 +71,7 @@
 };
 
 &uart2 {
+	/delete-property/ dmas;
 	pinctrl-0 = <&uart2m1_xfer>;
 	status = "okay";
 };
