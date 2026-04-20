@@ -144,7 +144,7 @@
 };
 
 &usbc0 {
-	status = "disabled";
+	status = "okay";
 };
 
 &rkcif {
