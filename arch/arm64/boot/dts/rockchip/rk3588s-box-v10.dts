@@ -50,9 +50,19 @@
 };
 
 &pinctrl {
+	hdmi {
+		hdmi_en_gpio: hdmi-en-gpio {
+			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_output_high>;
+		};
+	};
+
 	usb {
 		vcc5v0_host_en: vcc5v0-host-en {
-			rockchip,pins = <0 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+			rockchip,pins = <0 RK_PD0 RK_FUNC_GPIO &pcfg_output_high>;
+		};
+
+		vcc5v0_limit_en: vcc5v0-limit-en {
+			rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_output_high>;
 		};
 	};
 };
