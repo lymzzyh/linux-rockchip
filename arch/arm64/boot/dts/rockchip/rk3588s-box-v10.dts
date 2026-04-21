@@ -232,6 +232,22 @@
 	status = "disabled";
 };
 
+&mipi_dcphy0 {
+	status = "disabled";
+};
+
+&mipi_dcphy1 {
+	status = "disabled";
+};
+
+&mipi0_csi2 {
+	status = "disabled";
+};
+
+&mipi1_csi2 {
+	status = "disabled";
+};
+
 &usbc0 {
 	status = "disabled";
 };
@@ -294,6 +310,22 @@
 };
 
 &es8388_sound {
+	status = "disabled";
+};
+
+&es8388 {
+	status = "disabled";
+};
+
+&mpu6500_acc {
+	status = "disabled";
+};
+
+&mpu6500_gyro {
+	status = "disabled";
+};
+
+&hym8563 {
 	status = "disabled";
 };
 
