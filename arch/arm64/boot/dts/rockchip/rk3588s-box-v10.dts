@@ -42,6 +42,21 @@
 	};
 };
 
+&vcc5v0_host {
+	gpio = <&gpio0 RK_PD0 GPIO_ACTIVE_HIGH>;
+	vin-supply = <&vcc5v0_usb>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&vcc5v0_host_en>;
+};
+
+&pinctrl {
+	usb {
+		vcc5v0_host_en: vcc5v0-host-en {
+			rockchip,pins = <0 RK_PD0 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+};
+
 /*
  * The vendor DTB exposes HDMI/DP, Type-C, AP6275P and RK806-family strings,
  * but gives no clear evidence for the EVB1's internal panel/touch/sensor
