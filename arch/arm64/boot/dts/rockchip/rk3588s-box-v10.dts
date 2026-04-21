@@ -76,7 +76,9 @@
 };
 
 &uart2 {
-	status = "disabled";
+	/delete-property/ dmas;
+	pinctrl-0 = <&uart2m1_xfer>;
+	status = "okay";
 };
 
 &uart3 {
@@ -175,8 +177,24 @@
 	status = "disabled";
 };
 
+&i2c7 {
+	status = "disabled";
+};
+
+&i2c8 {
+	status = "disabled";
+};
+
+&csi2_dcphy0 {
+	status = "disabled";
+};
+
+&csi2_dcphy1 {
+	status = "disabled";
+};
+
 &usbc0 {
-	status = "okay";
+	status = "disabled";
 };
 
 &rkcif {
@@ -217,7 +235,7 @@
 
 &fiq_debugger {
 	pinctrl-0 = <&uart2m0_xfer>;
-	status = "okay";
+	status = "disabled";
 };
 
 &wireless_bluetooth {
@@ -237,6 +255,18 @@
 };
 
 &es8388_sound {
+	status = "disabled";
+};
+
+&aw8601 {
+	status = "disabled";
+};
+
+&ov50c40 {
+	status = "disabled";
+};
+
+&otp_eeprom {
 	status = "disabled";
 };
 
