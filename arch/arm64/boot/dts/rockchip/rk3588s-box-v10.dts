@@ -427,6 +427,10 @@
 	dr_mode = "host";
 };
 
+&combphy2_psu {
+	status = "okay";
+};
+
 &usbdp_phy0 {
 	orientation-switch;
 	svid = <0xff01>;
