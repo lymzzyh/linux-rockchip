@@ -50,6 +50,9 @@
 };
 
 &pinctrl {
+	pinctrl-names = "default";
+	pinctrl-0 = <&vcc5v0_limit_en &hdmi_en_gpio>;
+
 	hdmi {
 		hdmi_en_gpio: hdmi-en-gpio {
 			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_output_high>;
