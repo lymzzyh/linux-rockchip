@@ -107,12 +107,16 @@
 	status = "disabled";
 };
 
+&i2c0 {
+	status = "disabled";
+};
+
 &i2c1 {
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c1m2_xfer>;
 
-	vdd_cpu_big0_box: rk8602@42 {
+	vdd_cpu_big0_box: vdd_cpu_big0_mem_box: rk8602@42 {
 		compatible = "rockchip,rk8602";
 		reg = <0x42>;
 		vin-supply = <&vcc5v0_sys>;
@@ -129,7 +133,7 @@
 		};
 	};
 
-	vdd_cpu_big1_box: rk8603@43 {
+	vdd_cpu_big1_box: vdd_cpu_big1_mem_box: rk8603@43 {
 		compatible = "rockchip,rk8603";
 		reg = <0x43>;
 		vin-supply = <&vcc5v0_sys>;
@@ -147,24 +151,61 @@
 	};
 };
 
+&i2c2 {
+	status = "okay";
+
+	vdd_npu_box: vdd_npu_mem_box: rk8602@42 {
+		compatible = "rockchip,rk8602";
+		reg = <0x42>;
+		vin-supply = <&vcc5v0_sys>;
+		regulator-compatible = "rk860x-reg";
+		regulator-name = "vdd_npu_s0";
+		regulator-min-microvolt = <550000>;
+		regulator-max-microvolt = <950000>;
+		regulator-ramp-delay = <2300>;
+		rockchip,suspend-voltage-selector = <1>;
+		regulator-boot-on;
+		regulator-always-on;
+		regulator-state-mem {
+			regulator-off-in-suspend;
+		};
+	};
+};
+
 &cpu_b0 {
 	cpu-supply = <&vdd_cpu_big0_box>;
-	mem-supply = <&vdd_cpu_big0_box>;
+	mem-supply = <&vdd_cpu_big0_mem_box>;
 };
 
 &cpu_b1 {
 	cpu-supply = <&vdd_cpu_big0_box>;
-	mem-supply = <&vdd_cpu_big0_box>;
+	mem-supply = <&vdd_cpu_big0_mem_box>;
 };
 
 &cpu_b2 {
 	cpu-supply = <&vdd_cpu_big1_box>;
-	mem-supply = <&vdd_cpu_big1_box>;
+	mem-supply = <&vdd_cpu_big1_mem_box>;
 };
 
 &cpu_b3 {
 	cpu-supply = <&vdd_cpu_big1_box>;
-	mem-supply = <&vdd_cpu_big1_box>;
+	mem-supply = <&vdd_cpu_big1_mem_box>;
+};
+
+&rknpu {
+	rknpu-supply = <&vdd_npu_box>;
+	mem-supply = <&vdd_npu_mem_box>;
+};
+
+&{/charge-animation} {
+	regulator-off-in-mem = <&vdd_gpu_s0>, <&vdd_npu_box>,
+		<&vdd_vdenc_s0>, <&vdd_gpu_mem_s0>, <&vdd_npu_mem_box>,
+		<&vdd_vdenc_mem_s0>, <&vcc_3v3_s0>,
+		<&vccio_sd_s0>, <&avdd_0v75_s0>, <&vdd_0v85_s0>,
+		<&vdd_cpu_big1_box>, <&vdd_cpu_big0_box>, <&vdd_cpu_lit_s0>,
+		<&vdd_cpu_big1_mem_box>, <&vdd_cpu_big0_mem_box>, <&vdd_cpu_lit_mem_s0>,
+		<&vddq_ddr_s0>, <&vdd_ddr_s0>, <&vdd_ddr_pll_s0>,
+		<&avdd_1v2_s0>, <&vdd_0v75_s0>;
 };
 
 &sdio {
