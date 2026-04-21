@@ -232,6 +232,14 @@
 	status = "disabled";
 };
 
+&csi2_dphy0_hw {
+	status = "disabled";
+};
+
+&csi2_dphy1_hw {
+	status = "disabled";
+};
+
 &mipi_dcphy0 {
 	status = "disabled";
 };
@@ -245,6 +253,30 @@
 };
 
 &mipi1_csi2 {
+	status = "disabled";
+};
+
+&mipi0_csi2_hw {
+	status = "disabled";
+};
+
+&mipi1_csi2_hw {
+	status = "disabled";
+};
+
+&mipi2_csi2_hw {
+	status = "disabled";
+};
+
+&mipi3_csi2_hw {
+	status = "disabled";
+};
+
+&mipi4_csi2_hw {
+	status = "disabled";
+};
+
+&mipi5_csi2_hw {
 	status = "disabled";
 };
 
