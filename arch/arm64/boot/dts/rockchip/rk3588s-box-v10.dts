@@ -393,11 +393,11 @@
 };
 
 &sdio {
-	status = "disabled";
+	status = "okay";
 };
 
 &sdio_pwrseq {
-	status = "disabled";
+	status = "okay";
 };
 
 &i2c7 {
@@ -607,7 +607,9 @@
 };
 
 &wireless_wlan {
-	status = "disabled";
+	wifi_chip_type = "ap6275p";
+	pinctrl-0 = <&wifi_host_wake_irq &wifi_poweren_gpio>;
+	status = "okay";
 };
 
 &es7202_sound_micarray {
