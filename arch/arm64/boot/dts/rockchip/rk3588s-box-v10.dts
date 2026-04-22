@@ -393,11 +393,12 @@
 };
 
 &sdio {
+	/delete-property/ mmc-pwrseq;
 	status = "okay";
 };
 
 &sdio_pwrseq {
-	status = "okay";
+	status = "disabled";
 };
 
 &i2c7 {
