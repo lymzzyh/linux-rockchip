@@ -103,6 +103,25 @@
 	status = "disabled";
 };
 
+&hdmi0 {
+	enable-gpios = <&gpio4 RK_PB6 GPIO_ACTIVE_HIGH>;
+	status = "okay";
+};
+
+&hdmi0_in_vp0 {
+	status = "okay";
+};
+
+&hdptxphy_hdmi0 {
+	status = "okay";
+};
+
+&route_hdmi0 {
+	status = "okay";
+	logo,mode = "fullscreen";
+	connect = <&vp0_out_hdmi0>;
+};
+
 &{/panel-edp} {
 	status = "disabled";
 };
