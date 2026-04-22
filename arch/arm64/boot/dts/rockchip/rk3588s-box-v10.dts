@@ -40,6 +40,17 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&vcc5v0_otg_en_box>;
 	};
+
+	vcc3v3_pcie: vcc3v3-pcie {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc3v3_pcie";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		startup-delay-us = <5000>;
+		enable-active-high;
+		gpio = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
+		vin-supply = <&vcc5v0_sys>;
+	};
 };
 
 &vcc5v0_host {
@@ -66,24 +77,6 @@
 
 		vcc5v0_limit_en: vcc5v0-limit-en {
 			rockchip,pins = <4 RK_PA6 RK_FUNC_GPIO &pcfg_output_high>;
-		};
-	};
-
-	sdio-box {
-		sdiom0_pins_box: sdiom0-pins-box {
-			rockchip,pins =
-				/* sdio_clk_m0 */
-				<2 RK_PB3 2 &pcfg_pull_none>,
-				/* sdio_cmd_m0 */
-				<2 RK_PB2 2 &pcfg_pull_up>,
-				/* sdio_d0_m0 */
-				<2 RK_PA6 2 &pcfg_pull_up>,
-				/* sdio_d1_m0 */
-				<2 RK_PA7 2 &pcfg_pull_up>,
-				/* sdio_d2_m0 */
-				<2 RK_PB0 2 &pcfg_pull_up>,
-				/* sdio_d3_m0 */
-				<2 RK_PB1 2 &pcfg_pull_up>;
 		};
 	};
 };
@@ -411,9 +404,7 @@
 };
 
 &sdio {
-	/delete-property/ mmc-pwrseq;
-	pinctrl-0 = <&sdiom0_pins_box>;
-	status = "okay";
+	status = "disabled";
 };
 
 &sdio_pwrseq {
@@ -618,6 +609,16 @@
 	status = "okay";
 };
 
+&combphy0_ps {
+	status = "okay";
+};
+
+&pcie2x1l2 {
+	status = "okay";
+	reset-gpios = <&gpio3 RK_PD1 GPIO_ACTIVE_HIGH>;
+	vpcie3v3-supply = <&vcc3v3_pcie>;
+};
+
 &wireless_bluetooth {
 	status = "disabled";
 };
@@ -627,9 +628,7 @@
 };
 
 &wireless_wlan {
-	wifi_chip_type = "ap6275p";
-	pinctrl-0 = <&wifi_host_wake_irq &wifi_poweren_gpio>;
-	status = "okay";
+	status = "disabled";
 };
 
 &es7202_sound_micarray {
