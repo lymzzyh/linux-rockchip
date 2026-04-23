@@ -217,7 +217,9 @@
 };
 
 &uart9 {
-	status = "disabled";
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart9m2_xfer &uart9m2_ctsn>;
+	status = "okay";
 };
 
 &i2c0 {
