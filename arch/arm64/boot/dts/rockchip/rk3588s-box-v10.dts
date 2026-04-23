@@ -644,8 +644,6 @@
 };
 
 &wireless_bluetooth {
-	/delete-property/ clocks;
-	/delete-property/ clock-names;
 	uart_rts_gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
 	pinctrl-names = "default", "rts_gpio";
 	pinctrl-0 = <&uart9m2_rtsn &bt_reset_gpio_box &bt_wake_gpio_box
