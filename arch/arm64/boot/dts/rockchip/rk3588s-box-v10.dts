@@ -51,6 +51,24 @@
 		gpio = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
 		vin-supply = <&vcc5v0_sys>;
 	};
+
+	wireless-bluetooth {
+		uart9_gpios_box: uart9-gpios-box {
+			rockchip,pins = <3 RK_PD2 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		bt_reset_gpio_box: bt-reset-gpio-box {
+			rockchip,pins = <0 RK_PC5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		bt_wake_gpio_box: bt-wake-gpio-box {
+			rockchip,pins = <0 RK_PC6 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		bt_irq_gpio_box: bt-irq-gpio-box {
+			rockchip,pins = <0 RK_PB0 RK_FUNC_GPIO &pcfg_pull_down>;
+		};
+	};
 };
 
 &vcc5v0_host {
@@ -625,7 +643,17 @@
 };
 
 &wireless_bluetooth {
-	status = "disabled";
+	/delete-property/ clocks;
+	/delete-property/ clock-names;
+	uart_rts_gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
+	pinctrl-names = "default", "rts_gpio";
+	pinctrl-0 = <&uart9m2_rtsn &bt_reset_gpio_box &bt_wake_gpio_box
+		     &bt_irq_gpio_box &clk32k_out0>;
+	pinctrl-1 = <&uart9_gpios_box>;
+	BT,reset_gpio = <&gpio0 RK_PC5 GPIO_ACTIVE_HIGH>;
+	BT,wake_gpio = <&gpio0 RK_PC6 GPIO_ACTIVE_HIGH>;
+	BT,wake_host_irq = <&gpio0 RK_PB0 GPIO_ACTIVE_HIGH>;
+	status = "okay";
 };
 
 &uart7 {
