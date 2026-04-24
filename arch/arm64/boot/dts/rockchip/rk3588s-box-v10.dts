@@ -644,7 +644,10 @@
 };
 
 &wireless_bluetooth {
-	uart_rts_gpios = <&gpio3 RK_PD3 GPIO_ACTIVE_LOW>;
+	/* Keep rfkill RTS GPIO on the actual UART9 RTSN pin to avoid
+	 * fighting uart9m2_ctsn, which is owned by febc0000.serial.
+	 */
+	uart_rts_gpios = <&gpio3 RK_PD2 GPIO_ACTIVE_LOW>;
 	pinctrl-names = "default", "rts_gpio";
 	pinctrl-0 = <&uart9m2_rtsn &bt_reset_gpio_box &bt_wake_gpio_box
 		     &bt_irq_gpio_box &clk32k_out0>;
