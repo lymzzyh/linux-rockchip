@@ -76,6 +76,10 @@
 	es7148: dummy-codec {
 		compatible = "rockchip,dummy-codec";
 		#sound-dai-cells = <0>;
+		clocks = <&mclkout_i2s1>;
+		clock-names = "mclk";
+		assigned-clocks = <&mclkout_i2s1>;
+		assigned-clock-rates = <12288000>;
 		status = "okay";
 	};
 
