@@ -90,8 +90,11 @@
 #define TCA6507_LS_BLINK0	0x6	/* Blink at Bank0 rate */
 #define TCA6507_LS_BLINK1	0x7	/* Blink at Bank1 rate */
 
+#define NUM_LEDS 7
+
 struct tca6507_platform_data {
 	struct led_platform_data leds;
+	struct fwnode_handle *fwnodes[NUM_LEDS];
 #ifdef CONFIG_GPIOLIB
 	int gpio_base;
 #endif
@@ -152,7 +155,6 @@ static inline int TO_BRIGHT(int level)
 	return 0;
 }
 
-#define NUM_LEDS 7
 struct tca6507_chip {
 	int			reg_set;	/* One bit per register where
 						 * a '1' means the register
@@ -683,6 +685,10 @@ tca6507_led_dt_init(struct device *dev)
 	if (!tca_leds)
 		return ERR_PTR(-ENOMEM);
 
+	pdata = devm_kzalloc(dev, sizeof(*pdata), GFP_KERNEL);
+	if (!pdata)
+		return ERR_PTR(-ENOMEM);
+
 	device_for_each_child_node(dev, child) {
 		struct led_info led;
 		u32 reg;
@@ -707,12 +713,8 @@ tca6507_led_dt_init(struct device *dev)
 		}
 
 		tca_leds[reg] = led;
+		pdata->fwnodes[reg] = fwnode_handle_get(child);
 	}
-
-	pdata = devm_kzalloc(dev, sizeof(struct tca6507_platform_data),
-			     GFP_KERNEL);
-	if (!pdata)
-		return ERR_PTR(-ENOMEM);
 
 	pdata->leds.leds = tca_leds;
 	pdata->leds.num_leds = NUM_LEDS;
@@ -760,6 +762,7 @@ static int tca6507_probe(struct i2c_client *client,
 
 	for (i = 0; i < NUM_LEDS; i++) {
 		struct tca6507_led *l = tca->leds + i;
+		struct led_init_data init_data = {};
 
 		l->chip = tca;
 		l->num = i;
@@ -770,7 +773,9 @@ static int tca6507_probe(struct i2c_client *client,
 			l->led_cdev.brightness_set = tca6507_brightness_set;
 			l->led_cdev.blink_set = tca6507_blink_set;
 			l->bank = -1;
-			err = led_classdev_register(dev, &l->led_cdev);
+			init_data.fwnode = pdata->fwnodes[i];
+			err = led_classdev_register_ext(dev, &l->led_cdev,
+						    &init_data);
 			if (err < 0)
 				goto exit;
 		}

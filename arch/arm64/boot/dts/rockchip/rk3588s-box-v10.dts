@@ -422,7 +422,59 @@
 		compatible = "ti,tca6507";
 		reg = <0x45>;
 		gpios = <&gpio4 10 GPIO_ACTIVE_HIGH>;
+		#address-cells = <1>;
+		#size-cells = <0>;
 		status = "okay";
+
+		led@0 {
+			reg = <0>;
+			label = "front:led0:power";
+			linux,default-trigger = "default-on";
+		};
+
+		led@1 {
+			reg = <1>;
+			label = "front:led1:cpu";
+			linux,default-trigger = "cpu";
+		};
+
+		led@2 {
+			reg = <2>;
+			label = "front:led2:eth";
+			linux,default-trigger = "netdev";
+			linux,netdev-name = "end1";
+			linux,netdev-link;
+			linux,netdev-rx;
+			linux,netdev-tx;
+		};
+
+		led@3 {
+			reg = <3>;
+			label = "front:led3:disk";
+			linux,default-trigger = "disk-activity";
+		};
+
+		led@4 {
+			reg = <4>;
+			label = "front:led4:usb-gadget";
+			linux,default-trigger = "usb-gadget";
+		};
+
+		led@5 {
+			reg = <5>;
+			label = "front:led5:usb-host";
+			linux,default-trigger = "usb-host";
+		};
+
+		led@6 {
+			reg = <6>;
+			label = "front:led6:wifi";
+			linux,default-trigger = "netdev";
+			linux,netdev-name = "wlP4p65s0";
+			linux,netdev-link;
+			linux,netdev-rx;
+			linux,netdev-tx;
+		};
 	};
 
 	usbc0_box: fusb302@22 {
@@ -537,6 +589,10 @@
 
 &sdmmc {
 	status = "disabled";
+};
+
+&sdhci {
+	no-led;
 };
 
 &vcc_3v3_sd_s0 {

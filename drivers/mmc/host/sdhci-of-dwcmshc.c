@@ -881,6 +881,8 @@ static int dwcmshc_probe(struct platform_device *pdev)
 		goto err_clk;
 
 	sdhci_get_of_property(pdev);
+	if (device_property_read_bool(&pdev->dev, "no-led"))
+		host->quirks |= SDHCI_QUIRK_NO_LED;
 
 	priv->vendor_specific_area1 =
 		sdhci_readl(host, DWCMSHC_P_VENDOR_AREA1) & DWCMSHC_AREA1_MASK;

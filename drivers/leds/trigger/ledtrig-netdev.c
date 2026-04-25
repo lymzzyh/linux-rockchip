@@ -20,6 +20,7 @@
 #include <linux/list.h>
 #include <linux/module.h>
 #include <linux/netdevice.h>
+#include <linux/property.h>
 #include <linux/spinlock.h>
 #include <linux/timer.h>
 #include "../leds.h"
@@ -395,6 +396,7 @@ static void netdev_trig_work(struct work_struct *work)
 static int netdev_trig_activate(struct led_classdev *led_cdev)
 {
 	struct led_netdev_data *trigger_data;
+	const char *device_name;
 	int rc;
 
 	trigger_data = kzalloc(sizeof(struct led_netdev_data), GFP_KERNEL);
@@ -415,6 +417,23 @@ static int netdev_trig_activate(struct led_classdev *led_cdev)
 	trigger_data->mode = 0;
 	atomic_set(&trigger_data->interval, msecs_to_jiffies(50));
 	trigger_data->last_activity = 0;
+
+	if (!device_property_read_string(led_cdev->dev, "linux,netdev-name",
+					 &device_name)) {
+		strscpy(trigger_data->device_name, device_name, IFNAMSIZ);
+		trigger_data->net_dev = dev_get_by_name(&init_net,
+						     trigger_data->device_name);
+		if (trigger_data->net_dev &&
+		    netif_carrier_ok(trigger_data->net_dev))
+			set_bit(NETDEV_LED_MODE_LINKUP, &trigger_data->mode);
+
+		if (device_property_read_bool(led_cdev->dev, "linux,netdev-link"))
+			set_bit(NETDEV_LED_LINK, &trigger_data->mode);
+		if (device_property_read_bool(led_cdev->dev, "linux,netdev-rx"))
+			set_bit(NETDEV_LED_RX, &trigger_data->mode);
+		if (device_property_read_bool(led_cdev->dev, "linux,netdev-tx"))
+			set_bit(NETDEV_LED_TX, &trigger_data->mode);
+	}
 
 	led_set_trigger_data(led_cdev, trigger_data);
 
