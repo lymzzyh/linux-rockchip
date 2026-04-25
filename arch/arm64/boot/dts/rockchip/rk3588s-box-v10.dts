@@ -79,6 +79,17 @@
 		status = "okay";
 	};
 
+	vcc_amp_en: vcc-amp-en-regulator {
+		compatible = "regulator-fixed";
+		regulator-name = "vcc_amp_en";
+		enable-active-high;
+		gpio = <&gpio0 RK_PD3 GPIO_ACTIVE_HIGH>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&amp_en_gpio>;
+		regulator-always-on;
+		regulator-boot-on;
+	};
+
 	i2s1_sound: i2s1-sound {
 		compatible = "simple-audio-card";
 		simple-audio-card,format = "i2s";
@@ -125,6 +136,10 @@
 	};
 
 	audio {
+		amp_en_gpio: amp-en-gpio {
+			rockchip,pins = <0 RK_PD3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
 		codec_i2s1m0_lrck: codec-i2s1m0-lrck {
 			rockchip,pins = <4 RK_PA2 3 &pcfg_pull_none>;
 		};
