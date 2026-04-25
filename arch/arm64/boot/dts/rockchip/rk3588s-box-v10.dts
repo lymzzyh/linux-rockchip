@@ -292,9 +292,12 @@
 };
 
 &i2s1_8ch {
+	/delete-property/ rockchip,trcm-sync-tx-only;
+	/delete-property/ i2s-lrck-gpio;
 	pinctrl-names = "default";
 	pinctrl-0 = <&codec_i2s1m0_lrck &codec_i2s1m0_sclk
 		     &codec_i2s1m0_mclk &codec_i2s1m0_sdo2>;
+	rockchip,clk-trcm = <1>;
 	rockchip,i2s-tx-route = <2 1 0 3>;
 	status = "okay";
 };
