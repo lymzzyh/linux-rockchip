@@ -52,6 +52,27 @@
 		vin-supply = <&vcc5v0_sys>;
 	};
 
+	spdif_tx0_dc: spdif-tx0-dc {
+		compatible = "linux,spdif-dit";
+		#sound-dai-cells = <0>;
+		status = "okay";
+	};
+
+	spdif_tx0_sound: spdif-tx0-sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,name = "rockchip,spdif";
+		simple-audio-card,mclk-fs = <128>;
+		status = "okay";
+
+		simple-audio-card,cpu {
+			sound-dai = <&spdif_tx0>;
+		};
+
+		simple-audio-card,codec {
+			sound-dai = <&spdif_tx0_dc>;
+		};
+	};
+
 };
 
 &{/aliases} {
@@ -218,6 +239,12 @@
 
 &{/panel-edp} {
 	status = "disabled";
+};
+
+&spdif_tx0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spdif0m1_tx>;
+	status = "okay";
 };
 
 &uart0 {
