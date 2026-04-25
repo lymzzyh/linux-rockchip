@@ -416,7 +416,7 @@
 	/delete-node/ bq25703@6b;
 
 	tca6507@45 {
-		compatible = "leds,tca6507";
+		compatible = "ti,tca6507";
 		reg = <0x45>;
 		gpios = <&gpio4 10 GPIO_ACTIVE_HIGH>;
 		status = "okay";
