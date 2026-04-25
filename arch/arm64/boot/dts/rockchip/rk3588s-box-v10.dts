@@ -54,6 +54,12 @@
 
 };
 
+&{/aliases} {
+	/delete-property/ spi5;
+};
+
+/delete-node/ &sfc;
+
 &vcc5v0_host {
 	gpio = <&gpio0 RK_PD0 GPIO_ACTIVE_HIGH>;
 	vin-supply = <&vcc5v0_usb>;
