@@ -480,6 +480,14 @@
 	status = "disabled";
 };
 
+&sdmmc {
+	status = "disabled";
+};
+
+&vcc_3v3_sd_s0 {
+	status = "disabled";
+};
+
 &i2c7 {
 	status = "disabled";
 };
