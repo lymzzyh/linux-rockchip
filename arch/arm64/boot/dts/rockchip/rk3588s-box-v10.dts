@@ -73,6 +73,32 @@
 		};
 	};
 
+	es7148: dummy-codec {
+		compatible = "rockchip,dummy-codec";
+		#sound-dai-cells = <0>;
+		status = "okay";
+	};
+
+	i2s1_sound: i2s1-sound {
+		compatible = "simple-audio-card";
+		simple-audio-card,format = "i2s";
+		simple-audio-card,mclk-fs = <256>;
+		simple-audio-card,name = "rockchip,es7148";
+		status = "okay";
+
+		simple-audio-card,dai-link@0 {
+			format = "i2s";
+
+			cpu {
+				sound-dai = <&i2s1_8ch>;
+			};
+
+			codec {
+				sound-dai = <&es7148>;
+			};
+		};
+	};
+
 };
 
 &{/aliases} {
@@ -95,6 +121,24 @@
 	hdmi {
 		hdmi_en_gpio: hdmi-en-gpio {
 			rockchip,pins = <4 RK_PB5 RK_FUNC_GPIO &pcfg_output_high>;
+		};
+	};
+
+	audio {
+		codec_i2s1m0_lrck: codec-i2s1m0-lrck {
+			rockchip,pins = <4 RK_PA2 3 &pcfg_pull_none>;
+		};
+
+		codec_i2s1m0_sclk: codec-i2s1m0-sclk {
+			rockchip,pins = <4 RK_PA1 3 &pcfg_pull_none>;
+		};
+
+		codec_i2s1m0_mclk: codec-i2s1m0-mclk {
+			rockchip,pins = <4 RK_PA0 3 &pcfg_pull_none>;
+		};
+
+		codec_i2s1m0_sdo2: codec-i2s1m0-sdo2 {
+			rockchip,pins = <4 RK_PB3 3 &pcfg_pull_none>;
 		};
 	};
 
@@ -244,6 +288,14 @@
 &spdif_tx0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&spdif0m1_tx>;
+	status = "okay";
+};
+
+&i2s1_8ch {
+	pinctrl-names = "default";
+	pinctrl-0 = <&codec_i2s1m0_lrck &codec_i2s1m0_sclk
+		     &codec_i2s1m0_mclk &codec_i2s1m0_sdo2>;
+	rockchip,i2s-tx-route = <2 1 0 3>;
 	status = "okay";
 };
 
