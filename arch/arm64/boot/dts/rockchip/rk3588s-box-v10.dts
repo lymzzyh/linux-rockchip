@@ -122,6 +122,10 @@
 
 /delete-node/ &sfc;
 
+&gpu {
+	compatible = "rockchip,rk3588-mali", "arm,mali-valhall";
+};
+
 &vcc5v0_host {
 	gpio = <&gpio0 RK_PD0 GPIO_ACTIVE_HIGH>;
 	vin-supply = <&vcc5v0_usb>;
